@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Roommates.Repositories;
+using Roommates.Models;
 
 namespace Roommates
 {
@@ -11,6 +13,8 @@ namespace Roommates
 
         static void Main(string[] args)
         {
+            RoomRepository roomRepo = new RoomRepository(CONNECTION_STRING); // instantiating new RoomRepository
+
             bool runProgram = true;
             while (runProgram)
             {
@@ -19,7 +23,13 @@ namespace Roommates
                 switch (selection)
                 {
                     case ("Show all rooms"):
-                        // Do stuff
+                        List<Room> rooms = roomRepo.GetAll();
+                        foreach (Room r in rooms)
+                        {
+                            Console.WriteLine($"{r.Name} has an Id of {r.Id} and a max occupancy of {r.MaxOccupancy}");
+                        }
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
                         break;
                     case ("Search for room"):
                         // Do stuff
