@@ -25,7 +25,7 @@ namespace Roommates.Repositories
         /// <summary>
         ///  Get a list of all Rooms in the database
         /// </summary>
-        public List<Room> GetAll()
+        public List<Room> GetAllRooms()
         {
             //  We must "use" the database connection.
             //  Because a database is a shared resource (other applications may be using it too) we must
@@ -90,7 +90,7 @@ namespace Roommates.Repositories
         /// <summary>
         ///  Returns a single room with the given id.
         /// </summary>
-        public Room GetById(int id)
+        public Room GetRoomById(int id)
         {
             using (SqlConnection conn = Connection)
             {
@@ -126,7 +126,7 @@ namespace Roommates.Repositories
         ///   NOTE: This method sends data to the database,
         ///   it does not get anything from the database, so there is nothing to return.
         /// </summary>
-        public void Insert(Room room)
+        public void InsertRoom(Room room)
         {
             using (SqlConnection conn = Connection)
             {
