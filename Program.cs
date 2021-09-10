@@ -14,6 +14,7 @@ namespace Roommates
         static void Main(string[] args)
         {
             RoomRepository roomRepo = new RoomRepository(CONNECTION_STRING); // instantiating new RoomRepository
+            ChoreRepository choreRepo = new ChoreRepository(CONNECTION_STRING); // instantiating new ChoreRepository
 
             bool runProgram = true;
             while (runProgram)
@@ -23,7 +24,7 @@ namespace Roommates
                 switch (selection)
                 {
                     case ("Show all rooms"):
-                        List<Room> rooms = roomRepo.GetAll();
+                        List<Room> rooms = roomRepo.GetAllRooms();
                         foreach (Room r in rooms)
                         {
                             Console.WriteLine($"{r.Name} has an Id of {r.Id} and a max occupancy of {r.MaxOccupancy}");
@@ -35,7 +36,7 @@ namespace Roommates
                         Console.Write("Room Id: ");
                         int id = int.Parse(Console.ReadLine());
 
-                        Room room = roomRepo.GetById(id);
+                        Room room = roomRepo.GetRoomById(id);
 
                         Console.WriteLine($"{room.Id} - {room.Name} Max Occupancy({room.MaxOccupancy})");
                         Console.Write("Press any key to continue");
@@ -76,9 +77,28 @@ namespace Roommates
                             MaxOccupancy = max
                         };
 
-                        roomRepo.Insert(roomToAdd);
+                        roomRepo.InsertRoom(roomToAdd);
 
                         Console.WriteLine($"{roomToAdd.Name} has been added and assigned an Id of {roomToAdd.Id}");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
+                    case ("Show all chores"):
+                        List<Chore> chores = choreRepo.GetAllChores();
+                        foreach (Chore c in chores)
+                        {
+                            Console.WriteLine($"{c.Name} has an Id of {c.Id}! :)");
+                        }
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
+                    case ("Search for chore"):
+                        Console.Write("Chore Id: ");
+                        int choreId = int.Parse(Console.ReadLine());
+
+                        Chore chore = choreRepo.GetChoreById(choreId);
+
+                        Console.WriteLine($"{chore.Id} - {chore.Name} :D");
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
@@ -98,6 +118,8 @@ namespace Roommates
                 "Show all rooms",
                 "Search for room",
                 "Add a room",
+                "Show all chores",
+                "Search for chore",
                 "Exit"
             };
 
