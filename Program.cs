@@ -32,8 +32,37 @@ namespace Roommates
                         Console.ReadKey();
                         break;
                     case ("Search for room"):
-                        // Do stuff
+                        Console.Write("Room Id: ");
+                        int id = int.Parse(Console.ReadLine());
+
+                        Room room = roomRepo.GetById(id);
+
+                        Console.WriteLine($"{room.Id} - {room.Name} Max Occupancy({room.MaxOccupancy})");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
                         break;
+
+                    //Console.Write("Room Id: ");
+                    //int id = int.Parse(Console.ReadLine());
+                    //string input = Console.ReadLine();
+
+                    //Room room = roomRepo.GetById(id);
+
+                    //if (id < room.Id && id > room.Id && room.Id != int.TryParse(id, out id){}
+
+                    //char firstChar = input[0];
+                    //bool isNumber = Char.IsDigit(firstChar);
+                    //if (id < room.Id && id > room.Id)
+                    //{
+                    //    Console.WriteLine("Please enter a valid Room Id!");
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine($"{room.Id} - {room.Name} Max Occupancy({room.MaxOccupancy})");
+                    //    Console.Write("Press any key to continue");
+                    //    Console.ReadKey();
+                    //}
+                    
                     case ("Add a room"):
                         // Do stuff
                         break;
