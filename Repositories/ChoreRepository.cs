@@ -104,5 +104,24 @@ namespace Roommates.Repositories
                 }
             }
         }
+
+        ///  Add a new chore to the database:
+        public void InsertChore(Chore chore)
+        {
+            using (SqlConnection choreConn = Connection)
+            {
+                choreConn.Open();
+                using (SqlCommand cmd = choreConn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Chore (Name)
+                                         OUTPUT INSERTED.Id
+                                         VALUES (@name)";
+                    cmd.Parameters.AddWithValue("@name", chore.Name);
+                    int choreId = (int)cmd.ExecuteScalar();
+
+                    chore.Id = choreId;
+                }
+            }
+        }
     }
 }
