@@ -15,6 +15,7 @@ namespace Roommates
         {
             RoomRepository roomRepo = new RoomRepository(CONNECTION_STRING); // instantiating new RoomRepository
             ChoreRepository choreRepo = new ChoreRepository(CONNECTION_STRING); // instantiating new ChoreRepository
+            RoommateRepository roommateRepo = new RoommateRepository(CONNECTION_STRING); // instantiating new RoommateRepository
 
             bool runProgram = true;
             while (runProgram)
@@ -117,6 +118,16 @@ namespace Roommates
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
+                    case ("Search for roommate"):
+                        Console.Write("Roommate Id: ");
+                        int roommateId = int.Parse(Console.ReadLine());
+
+                        Roommate roommate = roommateRepo.GetRoommateById(roommateId);
+
+                        Console.WriteLine($"{roommate.Id} - {roommate.FirstName} Rent Portion - {roommate.RentPortion} Occupying - {roommate.Room.Name} :D");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
                     case ("Exit"):
                         runProgram = false;
                         break;
@@ -136,6 +147,7 @@ namespace Roommates
                 "Show all chores",
                 "Search for chore",
                 "Add a chore",
+                "Search for roommate",
                 "Exit"
             };
 
