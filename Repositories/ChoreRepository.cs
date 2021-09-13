@@ -222,6 +222,37 @@ namespace Roommates.Repositories
             }
         }
 
+        // Counts number of chores assigned to each roommate:
+        public List<ChoreCount> GetChoreCounts()
+        {
+            using (SqlConnection choreConn = Connection)
+            {
+                choreConn.Open();
+                using (SqlCommand cmd = choreConn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT rm.FirstName, rm.LastName, COUNT(*) as ChoreCount
+                                      FROM Roommate rm
+                                      INNER JOIN RoommateChore rc
+                                      ON rm.Id = rc.RoommateId
+                                      GROUP BY rm.Id, rm.FirstName, rm.LastName";
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    List<ChoreCount> choreCounts = new List<ChoreCount>();
+
+                    while (reader.Read())
+                    {
+                        choreCounts.Add(new ChoreCount
+                        {
+                            RoommateName = reader.GetString(reader.GetOrdinal("FirstName")) + " " + reader.GetString(reader.GetOrdinal("LastName")),
+                            Count = reader.GetInt32(reader.GetOrdinal("ChoreCount"))
+                        });
+                    }
+
+                    reader.Close();
+                    return choreCounts;
+                }
+            }
+        }
        
     }
 }
