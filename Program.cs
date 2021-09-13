@@ -228,6 +228,16 @@ namespace Roommates
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
+                    case ("Show number of chores assigned to each roommate"):
+                        List<ChoreCount> choreCounts = choreRepo.GetChoreCounts();
+                        foreach (ChoreCount count in choreCounts)
+                        {
+                            Console.WriteLine($"{count.RoommateName} is assigned {count.Count} chore(s)! :O");
+                        }
+
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
                     case ("Show all roommates"):
                         List<Roommate> roommates = roommateRepo.GetAllRoommates();
                         foreach (Roommate rm in roommates)
@@ -272,6 +282,7 @@ namespace Roommates
                 "Remove a chore",
                 "Show all unassigned chores",
                 "Assign a chore to roommate",
+                "Show number of chores assigned to each roommate",
                 "Show all roommates",
                 "Search for roommate",
                 "Exit"
