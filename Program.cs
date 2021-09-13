@@ -108,6 +108,22 @@ namespace Roommates
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
+                    case ("Delete a room"):
+                        List<Room> roomChoices = roomRepo.GetAllRooms();
+                        foreach (Room r in roomChoices)
+                        {
+                            Console.WriteLine($"{r.Id} - {r.Name} Max Occupancy({r.MaxOccupancy})");
+                        }
+
+                        Console.Write("Which room would you like to remove? ");
+                        int chosenRoomId = int.Parse(Console.ReadLine());
+
+                        roomRepo.DeleteRoom(chosenRoomId);
+
+                        Console.WriteLine("Room has been successfully removed! :(");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
                     case ("Show all chores"):
                         List<Chore> chores = choreRepo.GetAllChores();
                         foreach (Chore c in chores)
@@ -169,6 +185,7 @@ namespace Roommates
                 "Search for room",
                 "Add a room",
                 "Update a room",
+                "Delete a room",
                 "Show all chores",
                 "Search for chore",
                 "Add a chore",
