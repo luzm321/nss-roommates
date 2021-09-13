@@ -203,6 +203,40 @@ namespace Roommates
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
+                    case ("Assign a chore to roommate"):
+                        List<Chore> allChores = choreRepo.GetAllChores();
+                        foreach (Chore c in allChores)
+                        {
+                            Console.WriteLine($"{c.Name} has an Id of {c.Id}");
+                        }
+
+                        Console.Write("Which chore would you like to assign? ");
+                        int assignedChoreId = int.Parse(Console.ReadLine());
+
+                        List<Roommate> allRoommates = roommateRepo.GetAllRoommates();
+                        foreach (Roommate rm in allRoommates)
+                        {
+                            Console.WriteLine($"Roommate {rm.FirstName} {rm.LastName} has an Id of {rm.Id}");
+                        }
+
+                        Console.Write($"Which roommate would you like to assign the chore to? ");
+                        int assignedRoommateId = int.Parse(Console.ReadLine());
+
+                        choreRepo.AssignChore(assignedRoommateId, assignedChoreId);
+
+                        Console.WriteLine($"Chore has been successfully assigned to selected roommate! :D");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
+                    case ("Show all roommates"):
+                        List<Roommate> roommates = roommateRepo.GetAllRoommates();
+                        foreach (Roommate rm in roommates)
+                        {
+                            Console.WriteLine($"{rm.FirstName} {rm.LastName} has an Id of {rm.Id} with a RentPortion of {rm.RentPortion}. This roomie moved in on {rm.MovedInDate} and occupies {rm.Room.Name}.");
+                        }
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
                     case ("Search for roommate"):
                         Console.Write("Roommate Id: ");
                         int roommateId = int.Parse(Console.ReadLine());
@@ -237,6 +271,8 @@ namespace Roommates
                 "Update a chore",
                 "Remove a chore",
                 "Show all unassigned chores",
+                "Assign a chore to roommate",
+                "Show all roommates",
                 "Search for roommate",
                 "Exit"
             };
