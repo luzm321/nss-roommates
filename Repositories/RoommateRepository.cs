@@ -56,6 +56,60 @@ namespace Roommates.Repositories
             }
         }
 
+        // Retrieve list of all roommates:
+        public List<Roommate> GetAllRoommates()
+        {
+            using (SqlConnection roommateConn = Connection)
+            {
+                roommateConn.Open();
+                using (SqlCommand cmd = roommateConn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT rm.Id [rmId], rm.FirstName, rm.LastName, rm.RentPortion, rm.MoveInDate, rm.RoomId, r.Id [rId], r.Name, r.MaxOccupancy
+                                      FROM Roommate rm
+                                      INNER JOIN Room r
+                                      ON rm.RoomId = r.Id";
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    List<Roommate> roommates = new List<Roommate>();
+
+                    while (reader.Read())
+                    {
+                        int rmIdValue = reader.GetInt32(reader.GetOrdinal("rmId")); // Roommate.Id primary key on Roommate table
+                        string rmFirstNameValue = reader.GetString(reader.GetOrdinal("FirstName"));
+                        string rmLastNameValue = reader.GetString(reader.GetOrdinal("LastName"));
+                        int rmRentPortionValue = reader.GetInt32(reader.GetOrdinal("RentPortion"));
+                        DateTime rmMoveInDateValue = reader.GetDateTime(reader.GetOrdinal("MoveInDate"));
+                        int roomIdValue = reader.GetInt32(reader.GetOrdinal("RoomId")); // RoomId foreign key on Roommate table
+                        int rIdValue = reader.GetInt32(reader.GetOrdinal("rId")); // Room.Id primary key on Room table
+                        string rNameValue = reader.GetString(reader.GetOrdinal("Name"));
+                        int rMaxOccupancy = reader.GetInt32(reader.GetOrdinal("MaxOccupancy"));
+
+                        Roommate roommate = new Roommate
+                        {
+                            Id = rmIdValue,
+                            FirstName = rmFirstNameValue,
+                            LastName = rmLastNameValue,
+                            RentPortion = rmRentPortionValue,
+                            MovedInDate = rmMoveInDateValue,
+                            Room = new Room
+                            {
+                                Id = roomIdValue,
+                                Name = rNameValue,
+                                MaxOccupancy = rMaxOccupancy
+                            }
+                        };
+
+                        roommates.Add(roommate);
+                    }
+
+                    reader.Close();
+
+                    return roommates;
+                }
+            }
+        }
+
     }
 }
 
